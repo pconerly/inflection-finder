@@ -65,7 +65,7 @@ def process_inflections(inflections):
     
     cf.open()
 
-    for x in cfile:
+    for x in cf.shelve:
         LOG.debug("process_inflections: key from shelve: %s", x)
         # each line contains a key-value pair 
         # [ {'root': ['list', 'of', 'inflection', 'candidates'] } ]
@@ -164,7 +164,7 @@ def inflection_clusters(*args):
     LOG.debug("Inflection candidates:\n%s", inflection_candidates)
     
     # Add common string as element 1 of list (treat as key) + inflections as element 2 of list
-    add_candidate_to_file(common_substring, inflection_candidates)
+    cf.add_candidate_to_file(common_substring, inflection_candidates)
 
 def process_clusters(cluster_file):
     """
@@ -213,7 +213,7 @@ if __name__ == "__main__":
         sys.exit("File not specified.  Use -f or --file to specify; see inflection_finder.py -h.")
 
     CANDIDATE_FILE = "candidate_inflections"
-    cf = CandidateFile()
+    cf = CandidateFile(CANDIDATE_FILE)
 
     # Let's do it.
     print "\nFiles with candidate clustered morphemes should be CSV (utf-8 is Ok)."             
